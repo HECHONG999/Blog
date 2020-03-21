@@ -1,8 +1,8 @@
 var dbUtil = require("./DBUtil");
 
-function insertBlogTagsMapping(blogId, tagsId, success) {
-    var sql = "insert into blog_tags_mapping (`blog_id`, `tags_id`) values (?, ?);";
-    var params = [blogId, tagsId];
+function insertBlogTagsMapping(blogId, tagsId, ctime, utime, success) {
+    var sql = "insert into blog_tags_mapping (`blog_id`, `tag_id`,`ctime`,`utime`) values (?, ?,?,?);";
+    var params = [blogId, tagsId, ctime, utime];
     var connection = dbUtil.createConnection();
     connection.connect();
     connection.query(sql, params, function (error, result) {

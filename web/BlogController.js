@@ -4,20 +4,20 @@ var blogDao = require("../dao/BlogDao");
 var tagsDao = require("../dao/TagsDao");
 var blogTagsMappingDao = require("../dao/BlogTagsMappingDao");
 var timeUtil = require("../util/TimeUtil");
-var bodyParser = require("body-parser");
+var bodyParser = require("body-parser");  //Express中间件body-parser,使用这个模块可以解析JSON、Raw、文本、URL-encoded格式的请求体
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
-var jsonParser = bodyParser.json();
+var jsonParser = bodyParser.json();  //解析JSON格式
 
 app.post("/blog/addBlog", jsonParser, function (request, response) {
-    blogDao.insertBlog(request.body.title, request.body.author, decodeURI(request.body.content), 0, timeUtil.getNow(), request.body.tags, function (blogResult) {
+    blogDao.insertBlog(request.body.title, decodeURI(request.body.content), request.body.tags,0, timeUtil.getNow(), timeUtil.getNow(),  request.body.author,function (blogResult) {
         let tags = request.body.tags.split(",");
         for (let i = 0 ; i < tags.length ; i ++) {
             tagsDao.queryTags(tags[i], function (tagsResult) {
                if (tagsResult.length > 0) {//有这个标签，
-                    blogTagsMappingDao.insertBlogTagsMapping(blogResult.insertId, tagsResult[0].id, function (result) {});
+                    blogTagsMappingDao.insertBlogTagsMapping(blogResult.insertId, tagsResult[0].id, timeUtil.getNow(),timeUtil.getNow(),function (result) {});
                } else {//没有这个标签，创建标签
-                    tagsDao.insertTags(tags[i], function (newTagsResult) {
-                        blogTagsMappingDao.insertBlogTagsMapping(blogResult.insertId, newTagsResult.insertId, function (result) {});
+                    tagsDao.insertTags(tags[i],timeUtil.getNow(),timeUtil.getNow(), function (newTagsResult) {
+                        blogTagsMappingDao.insertBlogTagsMapping(blogResult.insertId, newTagsResult.insertId, timeUtil.getNow(),timeUtil.getNow(),function (result) {});
                     });
                }
             });

@@ -1,9 +1,9 @@
 var dbUtil = require("./DBUtil");
 var timeUtil = require("../util/TimeUtil");
 
-function insertBlog(title, author, content, views, ctime, tags, success) {
-    var sql = "insert into blog (`title`, `author`, `content`, `views`, `ctime`, `tags`) values (?, ?, ?, ?, ?, ?);";
-    var params = [title, author, content, views, ctime, tags];
+function insertBlog(title,  content, tags,views, ctime, utime, author, success) {
+    var sql = "insert into blog (`title`, `content`, `tags`, `views`, `ctime`, `utime`,`author`) values (?, ?,?,?, ?, ?, ?);";
+    var params = [title,  content, tags,views, ctime, utime, author];
     var connection = dbUtil.createConnection();
     connection.connect();
     connection.query(sql, params, function (error, result) {
