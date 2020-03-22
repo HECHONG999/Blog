@@ -1,6 +1,6 @@
 var app = require("../express");
 var url = require("url");
-var commentDao = require("../dao/CommentsDao");
+var commentDao = require("../dao/CommentsDao.js");
 var captcha = require("svg-captcha");
 var timeUtil = require("../util/TimeUtil");
 

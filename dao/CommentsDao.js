@@ -45,6 +45,21 @@ function queryCommentsByTime(size, success) {
     connection.end();
 }
 
+function queryNewComment(size, success) {
+    var querySql = "select * from comments order by id desc limit ?;";
+    var connection = DButil.createConnection();
+        connection.connect()
+    var params = [size];
+    connection.query(querySql, params, function (error, result) {
+        if( error == null) {
+            success(result)
+        } else {
+            console.log(error)
+        }
+    })
+}
+
 module.exports.insertComments = insertComments;
 module.exports.queryCommentsByBlogId = queryCommentsByBlogId;
 module.exports.queryCommentsByTime = queryCommentsByTime;
+module.exports.queryNewComment = queryNewComment
