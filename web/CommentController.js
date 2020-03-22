@@ -4,6 +4,20 @@ var commentDao = require("../dao/CommentsDao");
 var captcha = require("svg-captcha");
 var timeUtil = require("../util/TimeUtil");
 
+
+
+
+
+app.get("/queryNewComment", function queryNewComment(request, response) {
+    CommentDao.queryNewComment( 5, function (result) {
+        response.writeHead(200);
+        response.write(respUtil.writeResult("success", "查询成功", result));
+        response.end();
+    })
+}
+
+)
+
 app.get("/blog/getComment", function (request, response) {
     var params = url.parse(request.url, true).query;
     if (!params.id) {

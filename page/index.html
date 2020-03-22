@@ -55,6 +55,17 @@
                     <li v-for="(key, index) of blogList"><a v-bind:href="key.url">{{key.name}}</a></li>
                 </ul>
             </div>
+            <div class="newComment" id="newComment">
+                <div class="sub_title">最新评论</div>
+                <ul>
+                    <li v-for="item in newCommentList">
+                        <div>
+                            <span>{{item.content}}</span>
+                            <span>{{item.time}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <script src="./js/axios.js"></script>

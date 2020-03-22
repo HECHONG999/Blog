@@ -61,3 +61,28 @@ var hotBlog = new Vue({
 //     var footer = document.getElementsByTagName("footer")[0];
 //     footer.style.top = (document.body.scrollHeight + 30) + "px";
 // }
+
+
+
+var newComment = new Vue({
+    el: "#newComment",
+    data: {
+        newCommentList: []
+    },
+    created () {
+        axios({
+            method: "get",
+            url: "/queryNewComment"
+        }).then( function (res) {
+            var result = []
+            for(var i = 0; i < res.data.data.length; i ++) {
+                var temp = {}
+                temp.content = res.data.data[i].content;
+                var date = timeUtil(res.data.data[i].ctime)
+                temp.time = date.year + " 年 " + date.months + " 月" + date.day + " 日";
+                result.push(temp);
+            }
+            newComment.newCommentList = result
+        })
+    }
+})
