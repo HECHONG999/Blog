@@ -1,22 +1,24 @@
 var app = require("../express");
 var url = require("url");
-var commentDao = require("../dao/CommentsDao.js");
+var commentDao = require("../dao/CommentsDao");
 var captcha = require("svg-captcha");
 var timeUtil = require("../util/TimeUtil");
 
 
 
 
-
-app.get("/queryNewComment", function queryNewComment(request, response) {
-    CommentDao.queryNewComment( 5, function (result) {
+app.get("/queryNewComment", function (request, response) {
+    commentDao.queryNewComment( 5, function (result) {
         response.writeHead(200);
-        response.write(respUtil.writeResult("success", "查询成功", result));
+        
+        response.write( JSON.stringify({
+            status: "success",
+            msg: "查询成功",
+            data: result
+        }));
         response.end();
     })
-}
-
-)
+})
 
 app.get("/blog/getComment", function (request, response) {
     var params = url.parse(request.url, true).query;

@@ -47,7 +47,7 @@ function queryCommentsByTime(size, success) {
 
 function queryNewComment(size, success) {
     var querySql = "select * from comments order by id desc limit ?;";
-    var connection = DButil.createConnection();
+    var connection = dbUtil.createConnection();
         connection.connect()
     var params = [size];
     connection.query(querySql, params, function (error, result) {
